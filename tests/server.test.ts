@@ -48,13 +48,15 @@ describe("createMiddleware", () => {
     const mw = createMiddleware({ editor: "vscode" });
     const req = { url: "/__wte/open", method: "OPTIONS" } as any;
     const res = makeRes();
-    mw(req, res, () => { throw new Error("next() must not be called for OPTIONS"); });
+    mw(req, res, () => {
+      throw new Error("next() must not be called for OPTIONS");
+    });
     assert.equal(res.statusCode, 204);
     assert.ok(res.ended);
     assert.equal(res.headers["access-control-allow-methods"], "POST");
   });
 
-  it("calls next() for GET requests to the WTC path", (_ctx, done) => {
+  it("calls next() for GET requests to the WTE path", (_ctx, done) => {
     const mw = createMiddleware({ editor: "vscode" });
     const req = { url: "/__wte/open", method: "GET" } as any;
     const res = makeRes();
@@ -63,15 +65,24 @@ describe("createMiddleware", () => {
 
   it("handles POST /__wte/open and ends the response", async () => {
     const mw = createMiddleware({ editor: "vscode" });
-    const req = makeReq({ file: "/src/App.tsx", line: "5", col: "2" });
+    const req = makeReq({
+      file: "/src/App.tsx",
+      line: "5",
+      col: "2",
+    });
     const res = makeRes();
     const next = () => {
-      throw new Error("next() must not be called for a matched route");
+      throw new Error(
+        "next() must not be called for a matched route",
+      );
     };
     await new Promise<void>((resolve) => {
       mw(req, res, next);
       setImmediate(() => {
-        assert.ok(res.ended, "response should be ended after handling");
+        assert.ok(
+          res.ended,
+          "response should be ended after handling",
+        );
         resolve();
       });
     });
@@ -86,12 +97,17 @@ describe("createMiddleware", () => {
     );
     const res = makeRes();
     const next = () => {
-      throw new Error("next() must not be called — query string should be stripped");
+      throw new Error(
+        "next() must not be called — query string should be stripped",
+      );
     };
     await new Promise<void>((resolve) => {
       mw(req, res, next);
       setImmediate(() => {
-        assert.ok(res.ended, "response should be ended even with query params");
+        assert.ok(
+          res.ended,
+          "response should be ended even with query params",
+        );
         resolve();
       });
     });
@@ -99,7 +115,11 @@ describe("createMiddleware", () => {
 
   it("responds with status 200 on success", async () => {
     const mw = createMiddleware({ editor: "vscode" });
-    const req = makeReq({ file: "/src/App.tsx", line: "1", col: "0" });
+    const req = makeReq({
+      file: "/src/App.tsx",
+      line: "1",
+      col: "0",
+    });
     const res = makeRes();
     await new Promise<void>((resolve) => {
       mw(req, res, () => {});

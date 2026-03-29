@@ -17,7 +17,9 @@ const _require = createRequire(import.meta.url);
 
 // ─── Optional peer dependency loaders ───────────────────────────────────────
 
-function tryLoadVueCompiler(): typeof import("@vue/compiler-sfc") | null {
+function tryLoadVueCompiler():
+  | typeof import("@vue/compiler-sfc")
+  | null {
   try {
     return _require("@vue/compiler-sfc");
   } catch {
@@ -25,7 +27,9 @@ function tryLoadVueCompiler(): typeof import("@vue/compiler-sfc") | null {
   }
 }
 
-function tryLoadSvelteCompiler(): typeof import("svelte/compiler") | null {
+function tryLoadSvelteCompiler():
+  | typeof import("svelte/compiler")
+  | null {
   try {
     return _require("svelte/compiler");
   } catch {
@@ -71,7 +75,9 @@ function transformJsx(
       sourceType: "module",
       plugins: [
         "jsx",
-        id.endsWith(".tsx") || id.endsWith(".ts") ? "typescript" : null,
+        id.endsWith(".tsx") || id.endsWith(".ts")
+          ? "typescript"
+          : null,
       ].filter(Boolean) as any[],
     });
   } catch {
@@ -101,7 +107,8 @@ function transformJsx(
       // 2. Skip if data-wte already exists (idempotency)
       const alreadyInjected = node.attributes.some(
         (attr) =>
-          attr.type === "JSXAttribute" && attr.name.name === "data-wte",
+          attr.type === "JSXAttribute" &&
+          attr.name.name === "data-wte",
       );
       if (alreadyInjected) return;
 
@@ -151,7 +158,7 @@ function transformVue(
   const { ast } = vue.compileTemplate({
     source: templateContent,
     filename: id,
-    id: "wtc",
+    id: "wte",
   });
 
   if (!ast) return null;
@@ -209,7 +216,9 @@ function transformSvelte(
     // Svelte 4: type === "Element" | Svelte 5: type === "RegularElement"
     if (node.type === "Element" || node.type === "RegularElement") {
       const attrs: any[] = node.attributes ?? node.attrs ?? [];
-      const alreadyInjected = attrs.some((a: any) => a.name === "data-wte");
+      const alreadyInjected = attrs.some(
+        (a: any) => a.name === "data-wte",
+      );
       if (!alreadyInjected) {
         // node.start is the offset of '<'; +1+name.length lands after the tag name.
         const name: string = node.name ?? node.tag ?? "";
@@ -220,7 +229,8 @@ function transformSvelte(
         s.prependLeft(insertPos, ` data-wte="${id}:${line}:${col}"`);
         injected = true;
       }
-      const children: any[] = node.children ?? node.fragment?.nodes ?? [];
+      const children: any[] =
+        node.children ?? node.fragment?.nodes ?? [];
       children.forEach(walkNode);
     }
   }
