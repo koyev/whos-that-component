@@ -1,11 +1,10 @@
-<h1 align="center">whos-that-element 🔍</h1>
+<h1 align="center">Whos that element 🤔</h1>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/whos-that-element"><img src="https://img.shields.io/npm/v/whos-that-element?color=6366f1&label=npm" alt="npm version" /></a>
   <a href="https://www.npmjs.com/package/whos-that-element"><img src="https://img.shields.io/npm/dm/whos-that-element?color=6366f1" alt="npm downloads" /></a>
   <a href="https://github.com/koyev/whos-that-element/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/koyev/whos-that-element/ci.yml?branch=main&label=tests" alt="CI status" /></a>
   <a href="https://github.com/koyev/whos-that-element/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/whos-that-element?color=6366f1" alt="license" /></a>
-  <img src="https://img.shields.io/badge/vite-%3E%3D5-6366f1" alt="vite version" />
 </p>
 
 <p align="center">
@@ -35,52 +34,73 @@ npm install -D whos-that-element
 
 ## Setup
 
-### Laravel + Inertia
+### Laravel + Inertia (React / Vue / Svelte)
 
 **`vite.config.ts`**
 
 ```ts
-import { defineConfig } from 'vite'
-import laravel from 'laravel-vite-plugin'
-import react from '@vitejs/plugin-react' // or vue() / svelte()
-import wte from 'whos-that-element/vite'
+import { defineConfig } from "vite";
+import laravel from "laravel-vite-plugin";
+import react from "@vitejs/plugin-react"; // or vue() / svelte()
+import wte from "whos-that-element/vite";
 
 export default defineConfig({
   plugins: [
-    laravel({ input: ['resources/js/app.tsx'], refresh: true }),
+    laravel({ input: ["resources/js/app.tsx"], refresh: true }),
     react(),
-    wtc({ editor: 'vscode' }),
+    wte({ editor: "vscode" }),
   ],
-})
+});
 ```
 
 **`resources/js/app.tsx`**
 
 ```ts
-import 'whos-that-element/client'
+import "whos-that-element/client";
+```
+
+### Standalone Vite (React / Vue / Svelte)
+
+**`vite.config.ts`**
+
+```ts
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react"; // or vue() / svelte()
+import wte from "whos-that-element/vite";
+
+export default defineConfig({
+  plugins: [react(), wte({ editor: "vscode" })],
+});
+```
+
+**`src/main.tsx`**
+
+```ts
+import "whos-that-element/client";
 ```
 
 > The `client` import is intercepted by the Vite plugin during dev and replaced with the real client script. In production it resolves to an empty stub — no code ships to users.
 
 ---
 
-## Options
+## Compatibility
 
-| Option | Type | Default | Description |
-| --- | --- | --- | --- |
-| `editor` | `string` | `'vscode'` | IDE to open. One of `vscode`, `cursor`, `webstorm`, `sublime` |
-| `triggerKey` | `string` | `'Alt'` | Modifier key. On macOS, `Alt` is the Option (⌥) key |
-| `enabled` | `boolean` | auto | Explicitly enable or disable the plugin |
+| Environment                        | Status         |
+| ---------------------------------- | -------------- |
+| Laravel + Inertia (React/Vue/Svelte) | ✅ Supported  |
+| Vite + React / Vue / Svelte        | ✅ Supported   |
+| Next.js                            | ❌ Not supported — Turbopack does not expose the Vite plugin API |
+| Nuxt                               | 🔜 Coming soon |
 
 ---
 
-## Supported frameworks
+## Options
 
-| Framework | Extensions |
-| --- | --- |
-| React | `.jsx` `.tsx` |
-| Vue | `.vue` |
-| Svelte | `.svelte` |
+| Option       | Type      | Default    | Description                                                   |
+| ------------ | --------- | ---------- | ------------------------------------------------------------- |
+| `editor`     | `string`  | `'vscode'` | IDE to open. One of `vscode`, `cursor`, `webstorm`, `sublime` |
+| `triggerKey` | `string`  | `'Alt'`    | Modifier key. On macOS, `Alt` is the Option (⌥) key           |
+| `enabled`    | `boolean` | auto       | Explicitly enable or disable the plugin                       |
 
 ---
 
