@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
 import laravel from 'laravel-vite-plugin';
 import { defineConfig } from 'vite';
-import wtc from 'whos-that-component/vite';
+import wte from 'whos-that-element/vite';
 
 export default defineConfig({
     plugins: [

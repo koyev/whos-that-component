@@ -31,7 +31,7 @@
         "typescript": "^5.7.2",
         "typescript-eslint": "^8.23.0",
         "vite": "^8.0.0",
-        "whos-that-component": "file:../../"
+        "whos-that-element": "file:../../"
     },
     "dependencies": {
         "@inertiajs/svelte": "^3.0.0",

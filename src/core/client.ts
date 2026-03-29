@@ -16,7 +16,7 @@ document.addEventListener('keyup', (e) => {
 document.addEventListener('mouseover', (e) => {
   if (!on) return;
   let el = e.target;
-  while (el && !el.dataset.wtc) el = el.parentElement;
+  while (el && !el.dataset.wte) el = el.parentElement;
   if (el && el !== hovered) {
     if (hovered) hovered.style.outline = '';
     hovered = el;
@@ -27,7 +27,7 @@ document.addEventListener('click', (e) => {
   if (!on || !hovered) return;
   e.preventDefault();
   e.stopPropagation();
-  const parts = hovered.dataset.wtc.split(':');
+  const parts = hovered.dataset.wte.split(':');
   const col = parts.pop();
   const line = parts.pop();
   const file = parts.join(':');

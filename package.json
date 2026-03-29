@@ -1,5 +1,5 @@
 {
-  "name": "whos-that-component",
+  "name": "whos-that-element",
   "version": "0.1.0",
   "description": "Option+Click any element to open it in your IDE",
   "type": "module",

@@ -4,7 +4,7 @@ import { createMiddleware } from "../src/core/server.ts";
 
 // ─── Test helpers ────────────────────────────────────────────────────────────
 
-function makeReq(body: object, url = "/__wtc/open", method = "POST") {
+function makeReq(body: object, url = "/__wte/open", method = "POST") {
   const bodyStr = JSON.stringify(body);
   return {
     url,
@@ -42,12 +42,12 @@ describe("createMiddleware", () => {
 
   it("calls next() for GET requests to the WTC path", (_ctx, done) => {
     const mw = createMiddleware({ editor: "vscode" });
-    const req = { url: "/__wtc/open", method: "GET" } as any;
+    const req = { url: "/__wte/open", method: "GET" } as any;
     const res = makeRes();
     mw(req, res, done);
   });
 
-  it("handles POST /__wtc/open and ends the response", async () => {
+  it("handles POST /__wte/open and ends the response", async () => {
     const mw = createMiddleware({ editor: "vscode" });
     const req = makeReq({ file: "/src/App.tsx", line: "5", col: "2" });
     const res = makeRes();
@@ -68,7 +68,7 @@ describe("createMiddleware", () => {
     // Dev servers often append ?t=<timestamp> — the middleware must still match.
     const req = makeReq(
       { file: "/src/App.tsx", line: "3", col: "0" },
-      "/__wtc/open?t=1234567890",
+      "/__wte/open?t=1234567890",
     );
     const res = makeRes();
     const next = () => {

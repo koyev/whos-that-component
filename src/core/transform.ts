@@ -98,17 +98,17 @@ function transformJsx(
       // We found a valid DOM-rendering JSX element — flag it AFTER the fragment guard.
       hasJSX = true;
 
-      // 2. Skip if data-wtc already exists (idempotency)
+      // 2. Skip if data-wte already exists (idempotency)
       const alreadyInjected = node.attributes.some(
         (attr) =>
-          attr.type === "JSXAttribute" && attr.name.name === "data-wtc",
+          attr.type === "JSXAttribute" && attr.name.name === "data-wte",
       );
       if (alreadyInjected) return;
 
       const loc = node.loc?.start;
       if (!loc) return;
 
-      const attr = ` data-wtc="${id}:${loc.line}:${loc.column}"`;
+      const attr = ` data-wte="${id}:${loc.line}:${loc.column}"`;
 
       // 3. Insert after the opening tag name using magic-string (preserves source maps)
       const nameEnd = node.name.end;
@@ -161,7 +161,7 @@ function transformVue(
   function walkNode(node: any): void {
     if (node.type === 1 /* NodeTypes.ELEMENT */) {
       const alreadyInjected = node.props?.some(
-        (p: any) => p.name === "data-wtc",
+        (p: any) => p.name === "data-wte",
       );
       if (!alreadyInjected && node.loc) {
         // node.loc.start.offset is relative to templateContent; add the
@@ -174,7 +174,7 @@ function transformVue(
           node.tag.length;
         s.prependLeft(
           absOffset,
-          ` data-wtc="${id}:${node.loc.start.line}:${node.loc.start.column}"`,
+          ` data-wte="${id}:${node.loc.start.line}:${node.loc.start.column}"`,
         );
       }
       node.children?.forEach(walkNode);
@@ -209,7 +209,7 @@ function transformSvelte(
     // Svelte 4: type === "Element" | Svelte 5: type === "RegularElement"
     if (node.type === "Element" || node.type === "RegularElement") {
       const attrs: any[] = node.attributes ?? node.attrs ?? [];
-      const alreadyInjected = attrs.some((a: any) => a.name === "data-wtc");
+      const alreadyInjected = attrs.some((a: any) => a.name === "data-wte");
       if (!alreadyInjected) {
         // node.start is the offset of '<'; +1+name.length lands after the tag name.
         const name: string = node.name ?? node.tag ?? "";
@@ -217,7 +217,7 @@ function transformSvelte(
         const before = code.slice(0, node.start);
         const line = before.split("\n").length;
         const col = node.start - before.lastIndexOf("\n") - 1;
-        s.prependLeft(insertPos, ` data-wtc="${id}:${line}:${col}"`);
+        s.prependLeft(insertPos, ` data-wte="${id}:${line}:${col}"`);
         injected = true;
       }
       const children: any[] = node.children ?? node.fragment?.nodes ?? [];

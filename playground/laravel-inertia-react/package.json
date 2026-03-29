@@ -27,7 +27,7 @@
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "typescript-eslint": "^8.23.0",
-    "whos-that-component": "file:../../"
+    "whos-that-element": "file:../../"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",

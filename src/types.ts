@@ -1,4 +1,4 @@
-export interface WhosThatComponentOptions {
+export interface WhosThatElementOptions {
   /** Modifier key required to trigger click. Default: 'Alt' */
   triggerKey?: "Alt" | "Meta" | "Ctrl" | "Shift";
   /** The IDE to open. Default: 'vscode' */

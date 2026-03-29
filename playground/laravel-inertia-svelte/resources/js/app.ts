@@ -3,7 +3,7 @@ import AppLayout from '@/layouts/AppLayout.svelte';
 import AuthLayout from '@/layouts/AuthLayout.svelte';
 import SettingsLayout from '@/layouts/settings/Layout.svelte';
 import { initializeTheme } from '@/lib/theme.svelte';
-import 'whos-that-component/client';
+import 'whos-that-element/client';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 

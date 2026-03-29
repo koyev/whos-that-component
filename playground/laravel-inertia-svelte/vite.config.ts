@@ -4,7 +4,7 @@ import { svelte } from '@sveltejs/vite-plugin-svelte';
 import tailwindcss from '@tailwindcss/vite';
 import laravel from 'laravel-vite-plugin';
 import { defineConfig } from 'vite';
-import wtc from 'whos-that-component/vite';
+import wte from 'whos-that-element/vite';
 
 export default defineConfig({
     plugins: [

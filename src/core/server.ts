@@ -36,7 +36,7 @@ export function createMiddleware(options: { editor: string }) {
     // strings like ?t=1234567890 that would break strict equality.
     const basePath = req.url.split("?")[0];
 
-    if (basePath !== "/__wtc/open" || req.method !== "POST") {
+    if (basePath !== "/__wte/open" || req.method !== "POST") {
       return next();
     }
 

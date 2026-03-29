@@ -23,29 +23,29 @@ describe("transform — safety rules", () => {
 });
 
 describe("transform — JSX injection", () => {
-  it("injects data-wtc onto a simple div", () => {
+  it("injects data-wte onto a simple div", () => {
     const code = `export default function App() { return <div className="hello">Hi</div>; }`;
     const id = "/project/src/App.tsx";
     const result = transform(code, id);
     assert.ok(result, "should not return null");
-    assert.match(result.code, /data-wtc=/);
+    assert.match(result.code, /data-wte=/);
     assert.match(result.code, /\/project\/src\/App\.tsx/);
   });
 
-  it("injects data-wtc onto multiple sibling elements", () => {
+  it("injects data-wte onto multiple sibling elements", () => {
     const code = `function A() { return (<div><span>a</span><p>b</p></div>); }`;
     const result = transform(code, "/src/A.jsx");
     assert.ok(result);
-    const matches = result.code.match(/data-wtc=/g);
+    const matches = result.code.match(/data-wte=/g);
     assert.equal(matches?.length, 3, "should inject on div, span, and p");
   });
 
-  it("does not double-inject if data-wtc already present", () => {
-    const code = `function A() { return <div data-wtc="existing:1:0">hi</div>; }`;
+  it("does not double-inject if data-wte already present", () => {
+    const code = `function A() { return <div data-wte="existing:1:0">hi</div>; }`;
     const result = transform(code, "/src/A.jsx");
     assert.ok(result);
-    const matches = result.code.match(/data-wtc=/g);
-    assert.equal(matches?.length, 1, "should not add a second data-wtc");
+    const matches = result.code.match(/data-wte=/g);
+    assert.equal(matches?.length, 1, "should not add a second data-wte");
   });
 
   it("includes correct line number in the injected attribute", () => {
@@ -53,16 +53,16 @@ describe("transform — JSX injection", () => {
     const result = transform(code, "/src/A.jsx");
     assert.ok(result);
     // <div> is on line 3
-    assert.match(result.code, /data-wtc="\/src\/A\.jsx:3:/);
+    assert.match(result.code, /data-wte="\/src\/A\.jsx:3:/);
   });
 });
 
 describe("transform — Vue SFC injection", () => {
-  it("injects data-wtc into a Vue template element", () => {
+  it("injects data-wte into a Vue template element", () => {
     const code = `<template>\n  <div class="app">Hello</div>\n</template>\n<script setup>\n</script>`;
     const result = transform(code, "/src/App.vue");
     assert.ok(result, "should not return null for .vue files");
-    assert.match(result.code, /data-wtc=/);
+    assert.match(result.code, /data-wte=/);
     assert.match(result.code, /\/src\/App\.vue/);
   });
 
@@ -73,29 +73,29 @@ describe("transform — Vue SFC injection", () => {
 });
 
 describe("transform — Svelte injection", () => {
-  it("injects data-wtc into a Svelte template element", () => {
+  it("injects data-wte into a Svelte template element", () => {
     const code = `<script>\n  let x = 1;\n</script>\n\n<div class="app">{x}</div>`;
     const result = transform(code, "/src/App.svelte");
     assert.ok(result, "should not return null for .svelte files");
-    assert.match(result.code, /data-wtc=/);
+    assert.match(result.code, /data-wte=/);
     assert.match(result.code, /\/src\/App\.svelte/);
   });
 
-  it("injects data-wtc onto nested Svelte elements", () => {
+  it("injects data-wte onto nested Svelte elements", () => {
     const code = `<main><p>hello</p></main>`;
     const result = transform(code, "/src/B.svelte");
     assert.ok(result);
-    const matches = result.code.match(/data-wtc=/g);
+    const matches = result.code.match(/data-wte=/g);
     assert.equal(matches?.length, 2, "should inject on main and p");
   });
 
-  it("does not double-inject if data-wtc already present in Svelte", () => {
-    const code = `<div data-wtc="existing:1:0">hi</div>`;
+  it("does not double-inject if data-wte already present in Svelte", () => {
+    const code = `<div data-wte="existing:1:0">hi</div>`;
     const result = transform(code, "/src/C.svelte");
-    // Either returns null (nothing to inject) or keeps exactly one data-wtc
+    // Either returns null (nothing to inject) or keeps exactly one data-wte
     if (result !== null) {
-      const matches = result.code.match(/data-wtc=/g);
-      assert.equal(matches?.length, 1, "should not add a second data-wtc");
+      const matches = result.code.match(/data-wte=/g);
+      assert.equal(matches?.length, 1, "should not add a second data-wte");
     }
   });
 });

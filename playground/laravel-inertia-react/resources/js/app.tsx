@@ -1,4 +1,4 @@
-import 'whos-that-component/client';
+import 'whos-that-element/client';
 import { createInertiaApp } from '@inertiajs/react';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { initializeTheme } from '@/hooks/use-appearance';

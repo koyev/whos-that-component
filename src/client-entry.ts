@@ -1,4 +1,4 @@
-// Fallback stub for whos-that-component/client.
+// Fallback stub for whos-that-element/client.
 //
 // This file is only reached in production builds (where the wtc Vite plugin
 // is not active). In development the plugin intercepts this module via
